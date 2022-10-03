@@ -13,7 +13,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { useSetRecoilState } from 'recoil';
+import { useResetRecoilState, useSetRecoilState } from 'recoil';
 import { authModalState } from '../../../atoms/authModalAtom';
 import { auth } from '../../../firebase/clientApp';
 import { FaRedditSquare } from 'react-icons/fa';
@@ -22,6 +22,7 @@ import { IoSparkles } from 'react-icons/io5';
 import { CgProfile } from 'react-icons/cg';
 import { MdOutlineLogin } from 'react-icons/md';
 import { signOut, User } from 'firebase/auth';
+import { communityState } from '../../../atoms/communitiesAtom';
 
 // type UserMenuProps = {
 //   user?: User | null;
@@ -29,10 +30,13 @@ import { signOut, User } from 'firebase/auth';
 
 const UserMenu: React.FC = () => {
   const setAuthModalState = useSetRecoilState(authModalState);
+  const resetCommunityState = useResetRecoilState(communityState);
+
   const [user] = useAuthState(auth);
 
   const logout = async () => {
     await signOut(auth);
+    resetCommunityState();
   };
 
   return (
