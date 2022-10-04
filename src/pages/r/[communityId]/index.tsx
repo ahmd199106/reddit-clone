@@ -9,6 +9,7 @@ import Header from '../../../components/Community/Header';
 import PageContentLayout from '../../../components/Layout/PageContent';
 import { Flex, Text } from '@chakra-ui/react';
 import CreatePostLink from '../../../components/Community/CreatePostLink';
+import Posts from '../../../components/Posts/Posts';
 
 type CommunityPageProps = {
   communityData: Community;
@@ -26,9 +27,9 @@ const CommunityPage: React.FC<CommunityPageProps> = ({ communityData }) => {
     <>
       <Header communityData={communityData} />
       <PageContentLayout>
-        {/* Left Content */}
         <>
           <CreatePostLink />
+          <Posts communityData={communityData} />
           {/* <Posts
         communityData={communityData}
         userId={user?.uid}
