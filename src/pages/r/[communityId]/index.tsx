@@ -11,6 +11,7 @@ import { Flex, Text } from '@chakra-ui/react';
 import CreatePostLink from '../../../components/Community/CreatePostLink';
 import Posts from '../../../components/Posts/Posts';
 import { useSetRecoilState } from 'recoil';
+import About from '../../../components/Community/About';
 
 type CommunityPageProps = {
   communityData: Community;
@@ -49,10 +50,7 @@ const CommunityPage: React.FC<CommunityPageProps> = ({ communityData }) => {
         </>
         {/* Right Content */}
         <>
-          {/* <About communityData={communityData} /> */}
-          <Flex>
-            <Text>hi right content</Text>
-          </Flex>
+          <About communityData={communityData} />
         </>
       </PageContentLayout>
     </>
