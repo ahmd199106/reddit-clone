@@ -35,6 +35,8 @@ const About: React.FC<AboutProps> = ({ communityData }) => {
   const [uploadingImage, setUploadingImage] = useState(false);
   const [changesSaved, setChangesSaved] = useState<boolean>();
   const setCommunityStateValue = useSetRecoilState(communityState);
+  // const router = useRouter();
+  // const { communityId } = router.query;
 
   const updateImage = async () => {
     if (!selectedFile) return;
@@ -110,12 +112,12 @@ const About: React.FC<AboutProps> = ({ communityData }) => {
               </Text>
             )}
           </Flex>
-          <Link href={`/r/${communityData.id}/submit`}>
+          <Link href={`/r/${communityData?.id}/submit`}>
             <Button mt={3} height='30px' width='100%'>
               Create Post
             </Button>
           </Link>
-          {user?.uid === communityData.creatorId && (
+          {user?.uid === communityData?.creatorId && (
             <>
               <Divider />
               <Stack spacing={1} fontSize='10pt'>
