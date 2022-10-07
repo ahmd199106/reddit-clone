@@ -4,7 +4,9 @@ import {
   doc,
   increment,
   writeBatch,
+  getDoc,
 } from 'firebase/firestore';
+import router from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useRecoilState, useSetRecoilState } from 'recoil';
@@ -15,7 +17,7 @@ import {
   communityState,
 } from '../atoms/communitiesAtom';
 import { auth, firestore } from '../firebase/clientApp';
- 
+
 const useCommunityData = () => {
   const [user] = useAuthState(auth);
   const [communityStateValue, setCommunityStateValue] =
@@ -133,11 +135,47 @@ const useCommunityData = () => {
     setLoading(false);
   };
 
+  const getCommunityData = async (communityId: string) => {
+    try {
+      const communityDocRef = doc(
+        firestore,
+        'communities',
+        communityId as string,
+      );
+      const communityDoc = await getDoc(communityDocRef);
+
+      setCommunityStateValue((prev) => ({
+        ...prev,
+        currentCommunity: {
+          id: communityDoc.id,
+          ...communityDoc.data(),
+        } as Community,
+      }));
+    } catch (error) {
+      console.log(error, 'getCommunityData');
+    }
+  };
+
   useEffect(() => {
-    if (!user) return;
+    if (!user) {
+      setCommunityStateValue((prev) => ({
+        ...prev,
+        mySnippets: [],
+      }));
+      return;
+    }
     getMySnippets();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
+
+  useEffect(() => {
+    const { communityId } = router.query;
+
+    if (communityId && !communityStateValue.currentCommunity) {
+      getCommunityData(communityId as string);
+    }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router.query, communityStateValue.currentCommunity]);
 
   return {
     communityStateValue,
