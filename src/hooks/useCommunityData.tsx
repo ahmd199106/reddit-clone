@@ -174,8 +174,8 @@ const useCommunityData = () => {
     if (communityId && !communityStateValue.currentCommunity) {
       getCommunityData(communityId as string);
     }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router.query, communityStateValue.currentCommunity]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [communityStateValue.currentCommunity]);
 
   return {
     communityStateValue,

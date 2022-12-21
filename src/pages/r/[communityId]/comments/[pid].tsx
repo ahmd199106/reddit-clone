@@ -5,6 +5,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { Post } from '../../../../atoms/postsAtom';
 import About from '../../../../components/Community/About';
 import PageContent from '../../../../components/Layout/PageContent';
+import Comments from '../../../../components/Posts/Comments/Comments';
 import PostLoader from '../../../../components/Posts/Loader';
 import PostItem from '../../../../components/Posts/PostItem';
 import { auth, firestore } from '../../../../firebase/clientApp';
@@ -81,11 +82,11 @@ const PostPage: React.FC = () => {
                   }
                   //   router={router}
                 />
-                {/* <Comments
-              user={user}
-              community={community as string}
-              selectedPost={postStateValue.selectedPost}
-            /> */}
+                <Comments
+                  user={user}
+                  communityId={community as string}
+                  selectedPost={postStateValue.selectedPost}
+                />
               </>
             )}
           </>
